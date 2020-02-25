@@ -3,6 +3,7 @@
 Route::apiResource('class', 'Api\ClasseController');
 Route::apiResource('subject', 'Api\SubjectController');
 Route::apiResource('section', 'Api\SectionController');
+Route::apiResource('student', 'Api\StudentController');
 
 // use Illuminate\Http\Request;
 
