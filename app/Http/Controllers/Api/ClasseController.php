@@ -5,82 +5,56 @@ namespace App\Http\Controllers\Api;
 use App\Model\Classe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class ClasseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return Classe::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|unique:classes',
+        ]);
+
+        $data = array();
+        $data['name'] = $request->name;
+        $insert = DB::table('classes')->insert($data);
+        return response('done');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\Classe  $classe
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Classe $classe)
+    public function show($id)
     {
-        //
+        $show = DB::table('classes')->where('id', $id)->first();
+        return response()->json($show);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Classe  $classe
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Classe $classe)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Classe  $classe
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Classe $classe)
+    public function update(Request $request, $id)
     {
-        //
+        $data = array();
+        $data['name'] = $request->name;
+        DB::table('classes')->where('id', $id)->update($data);
+        return response('Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\Classe  $classe
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Classe $classe)
+    public function destroy($id)
     {
-        //
+        DB::table('classes')->where('id', $id)->delete();
+        return response('deleted');
     }
 }
