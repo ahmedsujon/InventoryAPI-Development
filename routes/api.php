@@ -1,6 +1,7 @@
 <?php
 
 Route::apiResource('class', 'Api\ClasseController');
+Route::apiResource('subject', 'Api\SubjectController');
 
 // use Illuminate\Http\Request;
 
