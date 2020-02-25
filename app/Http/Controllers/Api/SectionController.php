@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Model\Subject;
+use App\Model\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SubjectController extends Controller
+class SectionController extends Controller
 {
 
     public function index()
     {
-        $subject = Subject::all();
-        return response()->json($subject);
+        $section = Section::all();
+        return response()->json($section);
     }
 
     public function create()
@@ -24,36 +24,34 @@ class SubjectController extends Controller
     {
         $validatedData = $request->validate([
             'classe_id' => 'required',
-            'name' => 'required|unique:subjects',
-            'code' => 'required|unique:subjects',
+            'name' => 'required|unique:sections',
         ]);
-
-        $subject = Subject::create($request->all());
+        $section = Section::create($request->all());
         //return response()->json($subject);
-        return response('subject');
+        return response('section');
     }
 
     public function show($id)
     {
-        $subject = Subject::findorfail($id);
-        return response()->json($subject);
+        $section = Section::findorfail($id);
+        return response()->json($section);
     }
 
-    public function edit(Subject $subject)
+    public function edit(Section $section)
     {
         //
     }
 
     public function update(Request $request, $id)
     {
-        $subject = Subject::findorfail($id);
-        $subject->update($request->all());
+        $section = Section::findorfail($id);
+        $section->update($request->all());
         return response('Updated');
     }
 
     public function destroy($id)
     {
-        Subject::where('id', $id)->delete();
+        Section::where('id', $id)->delete();
         return response('Deleted');
     }
 }
